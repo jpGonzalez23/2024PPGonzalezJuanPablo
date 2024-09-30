@@ -4,8 +4,8 @@ export default class Aereo extends Vehiculo {
     altMax;
     autonomia;
 
-    constructor(id, modelo, anioFabricado, velocidadMaxima, alturaMaxima, autonomia) {
-        super(id, modelo, anioFabricado, velocidadMaxima);
+    constructor(modelo, anioFabricado, velocidadMaxima, alturaMaxima, autonomia) {
+        super(modelo, anioFabricado, velocidadMaxima);
         this.altMax = alturaMaxima;
         this.autonomia = autonomia;
     }

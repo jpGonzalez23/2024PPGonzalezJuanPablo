@@ -1,11 +1,12 @@
-export class Vehiculo { 
+export class Vehiculo {
+    static contadorId = 0;
     #id;
     modelo;
     anoFab;
     velMax;
 
-    constructor(id, modelo, anioFabricado, velocidadMaxima) { 
-        this.#id = id
+    constructor(modelo, anioFabricado, velocidadMaxima) { 
+        this.#id = ++Vehiculo.contadorId;
         this.modelo = modelo;
         this.anioFabricado = anioFabricado;
         this.velMax = velocidadMaxima;

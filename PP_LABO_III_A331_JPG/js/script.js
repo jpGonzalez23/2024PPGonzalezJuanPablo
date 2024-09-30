@@ -14,10 +14,10 @@ let vehiculosData = [
 const vehiculos = vehiculosData.map(v => {
     if ('cantPue' in v && 'cantRue' in v) {
         // Retorna una instancia de Terrestre
-        return new Terrestre(v.id, v.modelo, v.anoFab, v.velMax, v.cantPue, v.cantRue);
+        return new Terrestre(v.modelo, v.anoFab, v.velMax, v.cantPue, v.cantRue);
     } else if ('autonomia' in v && 'altMax' in v) {
         // Retorna una instancia de Aereo
-        return new Aereo(v.id, v.modelo, v.anoFab, v.velMax, v.altMax, v.autonomia);
+        return new Aereo(v.modelo, v.anoFab, v.velMax, v.altMax, v.autonomia);
     }
 });
 
@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="col-cantidad-puertas">${vehiculo.cantdPue || 'N/A'}</td>
                 <td class="col-cantidad-ruedas">${vehiculo.cantRue || 'N/A'}</td>
             `;
+            row.addEventListener('dblclick', () => editarVehiculo(vehiculo));
             tablaVehiculos.appendChild(row);
         });
     };
@@ -89,20 +90,19 @@ document.addEventListener('DOMContentLoaded', () => {
         formDatos.style.display = 'block';
     });
 
-    abmForm.addEventListener('submit', e => { 
-        e.preventDefault();
+    function editarVehiculo(vehiculo) {
+        document.getElementById('form-datos').style.display = 'none';
+        document.getElementById('form-abm').style.display = 'block';
 
-        const id = parseInt(document.getElementById('id').value);
-        const modelo = document.getElementById('modelo').value;
-        const anioFabricado = parseFloat(document.getElementById('anio-fabricado').value);
-        const velocidadMaxima = parseFloat(document.getElementById('velocidad-maxima').value);
-        const alturaMaxima = parseFloat(document.getElementById('altura-maxima').value);
-        const autonomia = parseInt(document.getElementById('autonomia').value);
-        const cantidadPuertas = parseInt(document.getElementById('cantidad-puertas').value);
-        const cantidadRuedas = parseInt(document.getElementById('cantidad-ruedas').value);
-        
-        let nuevoVehiculo;
-    });
+        document.getElementById('id').value = vehiculo.id;
+        document.getElementById('modelo').value = vehiculo.modelo;
+        document.getElementById('anio-fabricado').value = vehiculo.anoFab;
+        document.getElementById('velocidad-maxima').value = vehiculo.velMax;
+        document.getElementById('altura-maxima').value = vehiculo.altMax || '';
+        document.getElementById('autonomia').value = vehiculo.autonomia;
+        document.getElementById('cantidad-puertas').value = vehiculo.cantdPue || '';
+        document.getElementById('cantidad-ruedas').value = vehiculo.cantRue || '';
+    }
 
     MostrarDatos();
 });

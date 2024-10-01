@@ -13,10 +13,8 @@ let vehiculosData = [
 // Mapeo de los datos a las instancias de las clases
 const vehiculos = vehiculosData.map(v => {
     if ('cantPue' in v && 'cantRue' in v) {
-        // Retorna una instancia de Terrestre
         return new Terrestre(v.id, v.modelo, v.anoFab, v.velMax, v.cantPue, v.cantRue);
     } else if ('autonomia' in v && 'altMax' in v) {
-        // Retorna una instancia de Aereo
         return new Aereo(v.id, v.modelo, v.anoFab, v.velMax, v.altMax, v.autonomia);
     }
 });
@@ -105,8 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         let nVehiculo;
     
-        // Usar el valor del tipo en el formulario para decidir el tipo de vehículo, no el filtro de la tabla.
-        const tipo = document.getElementById('tipo').value; // Asumiendo que hay un campo select para elegir "terrestre" o "aereo"
+        const tipo = document.getElementById('tipo').value; 
     
         if (tipo === 'terrestre') {
             nVehiculo = new Terrestre(id, modelo, anoFab, velMax, cantdPue, cantRue);
@@ -117,15 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Debe seleccionar un tipo de vehículo');
         }
     
-        // Añadir el nuevo vehículo al array de vehículos
         vehiculos.push(nVehiculo);
-    
-        // Limpiar el formulario, ocultarlo y mostrar la lista de vehículos
-        formAbm.reset();
         formAbm.style.display = 'none';
         formDatos.style.display = 'block';
         
-        // Actualizar la tabla con los nuevos datos
         MostrarDatos();
     });
     

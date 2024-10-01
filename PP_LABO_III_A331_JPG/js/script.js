@@ -14,10 +14,10 @@ let vehiculosData = [
 const vehiculos = vehiculosData.map(v => {
     if ('cantPue' in v && 'cantRue' in v) {
         // Retorna una instancia de Terrestre
-        return new Terrestre(v.modelo, v.anoFab, v.velMax, v.cantPue, v.cantRue);
+        return new Terrestre(v.id, v.modelo, v.anoFab, v.velMax, v.cantPue, v.cantRue);
     } else if ('autonomia' in v && 'altMax' in v) {
         // Retorna una instancia de Aereo
-        return new Aereo(v.modelo, v.anoFab, v.velMax, v.altMax, v.autonomia);
+        return new Aereo(v.id, v.modelo, v.anoFab, v.velMax, v.altMax, v.autonomia);
     }
 });
 
@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const abmForm = document.getElementById('abm-form');
     const volverBtn = document.getElementById('volver');
     const promedioVehiculo = document.getElementById('promedio-vehiculo');
+    const calcularPromedio = document.getElementById('calcular-btn'); 
 
     const MostrarDatos = () => {
         tablaVehiculos.innerHTML = '';
@@ -58,16 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Evento para el cambio del filtro
     filtro.addEventListener('change', MostrarDatos);
 
-    document.getElementById('calcular-btn').addEventListener('click', () => {
-        const filtro = document.getElementById('filtro').value;
-        const vehiculoFiltrados = vehiculos.filter(v => {
-            if(filtro === 'todos') return true;
-            if(filtro === 'terrestre') return v.cantRue;
-            if(filtro === 'aereo') return v.altMax;
+    calcularPromedio.addEventListener('click', () => {
+        const filtradas = vehiculos.filter(v => {
+            if (filtro.value === 'todos') return true;
+            if (filtro.value === 'terrestre') return v instanceof Terrestre;
+            if (filtro.value === 'aereo') return v instanceof Aereo;
         });
 
-        const promedio = vehiculoFiltrados.reduce((acc, v) => acc + v.velMax, 0) / vehiculoFiltrados.length;
-        promedioVehiculo.textContent = `Promedio de Velocidad: ${promedio.toFixed(2)} km/h`;
+        const promedio = filtradas.reduce((acc, v) => acc + v.velMax, 0) / filtradas.length;
+
+        promedioVehiculo.textContent = `Promedio de velocidad: ${promedio.toFixed(2)}`;
     });
 
     // Mostrar/ocultar columnas según checkboxes seleccionados
@@ -90,18 +91,68 @@ document.addEventListener('DOMContentLoaded', () => {
         formDatos.style.display = 'block';
     });
 
-    function editarVehiculo(vehiculo) {
-        document.getElementById('form-datos').style.display = 'none';
-        document.getElementById('form-abm').style.display = 'block';
+    abmForm.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        const id = vehiculos.length + 1;
+        const modelo = document.getElementById('modelo').value;
+        const anoFab = parseInt(document.getElementById('anio-fabricado').value);
+        const velMax = parseInt(document.getElementById('velocidad-maxima').value);
+        const altMax = document.getElementById('altura-maxima').value ? parseInt(document.getElementById('altura-maxima').value) : null;
+        const autonomia = document.getElementById('autonomia').value ? parseInt(document.getElementById('autonomia').value) : null;
+        const cantdPue = document.getElementById('cantidad-puertas').value ? parseInt(document.getElementById('cantidad-puertas').value) : null;
+        const cantRue = document.getElementById('cantidad-ruedas').value ? parseInt(document.getElementById('cantidad-ruedas').value) : null;
+    
+        let nVehiculo;
+    
+        // Usar el valor del tipo en el formulario para decidir el tipo de vehículo, no el filtro de la tabla.
+        const tipo = document.getElementById('tipo').value; // Asumiendo que hay un campo select para elegir "terrestre" o "aereo"
+    
+        if (tipo === 'terrestre') {
+            nVehiculo = new Terrestre(id, modelo, anoFab, velMax, cantdPue, cantRue);
+        } else if (tipo === 'aereo') {
+            nVehiculo = new Aereo(id, modelo, anoFab, velMax, altMax, autonomia);
+        }
+        else {
+            alert('Debe seleccionar un tipo de vehículo');
+        }
+    
+        // Añadir el nuevo vehículo al array de vehículos
+        vehiculos.push(nVehiculo);
+    
+        // Limpiar el formulario, ocultarlo y mostrar la lista de vehículos
+        formAbm.reset();
+        formAbm.style.display = 'none';
+        formDatos.style.display = 'block';
+        
+        // Actualizar la tabla con los nuevos datos
+        MostrarDatos();
+    });
+    
 
-        document.getElementById('id').value = vehiculo.id;
+    function editarVehiculo(vehiculo) {
+        formDatos.style.display = 'none';
+        formAbm.style.display = 'block';
+
         document.getElementById('modelo').value = vehiculo.modelo;
         document.getElementById('anio-fabricado').value = vehiculo.anoFab;
         document.getElementById('velocidad-maxima').value = vehiculo.velMax;
-        document.getElementById('altura-maxima').value = vehiculo.altMax || '';
-        document.getElementById('autonomia').value = vehiculo.autonomia;
-        document.getElementById('cantidad-puertas').value = vehiculo.cantdPue || '';
-        document.getElementById('cantidad-ruedas').value = vehiculo.cantRue || '';
+
+        if(vehiculo instanceof Aereo) {
+            document.getElementById('altura-maxima').value = '';
+            document.getElementById('autonomia').value = '';
+            document.getElementById('cantidad-puertas').style.display = 'none';
+            document.getElementById('cantidad-ruedas').style.display = 'none';
+            document.getElementById('altura-maxima').value = vehiculo.altMax;
+            document.getElementById('autonomia').value = vehiculo.autonomia;
+        } else if (vehiculo instanceof Terrestre) {
+            document.getElementById('cantidad-puertas').value = '';
+            document.getElementById('cantidad-ruedas').value = '';
+            document.getElementById('altura-maxima').style.display = 'none';
+            document.getElementById('autonomia').style.display = 'none';
+            document.getAnimations('cantidad-puertas').value = vehiculo.cantdPue;
+            document.getElementById('cantidad-ruedas').value = vehiculo.cantRue;
+        }
     }
 
     MostrarDatos();

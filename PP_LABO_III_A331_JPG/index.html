@@ -81,6 +81,7 @@
         <form class="abm-form" id="abm-form">
             <label for="tipo">Tipo:</label>
             <select id="tipo">
+                <option value="-">-</option>
                 <option value="aereo">Aereo</option>
                 <option value="terrestre">Terrestre</option>
             </select>
@@ -95,16 +96,16 @@
             <input type="number" id="velocidad-maxima" required>
 
             <label for="altura-maxima">Altura Maxima:</label>
-            <input type="number" id="altura-maxima" required>
+            <input type="number" id="altura-maxima" >
 
             <label for="autonomia">Autonomia:</label>
-            <input type="number" id="autonomia" required>
+            <input type="number" id="autonomia">
 
             <label for="cantidad-puertas">Cantidad de Puertas:</label>
-            <input type="number" id="cantidad-puertas" required>
+            <input type="number" id="cantidad-puertas">
 
             <label for="cantidad-ruedas">Cantidad de Ruedas:</label>
-            <input type="number" id="cantidad-ruedas" required>
+            <input type="number" id="cantidad-ruedas">
 
             <button id="guardar-btn" type="submit">Guardar</button>
             <button id="cancelar-btn" type="button">Cancelar</button>

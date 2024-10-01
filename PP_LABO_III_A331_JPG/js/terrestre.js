@@ -4,8 +4,8 @@ export default class Terrestre extends Vehiculo {
     cantPue;
     cantRue;
 
-    constructor(modelo, anioFabricado, velocidadMaxima, cantidadPuertas, cantidadRuedas) {
-        super(modelo, anioFabricado, velocidadMaxima);
+    constructor(id, modelo, anioFabricado, velocidadMaxima, cantidadPuertas, cantidadRuedas) {
+        super(id, modelo, anioFabricado, velocidadMaxima);
         this.cantPue = cantidadPuertas;
         this.cantRue = cantidadRuedas;
     }

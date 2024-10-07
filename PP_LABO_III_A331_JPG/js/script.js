@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const promedioVehiculo = document.getElementById('promedio-vehiculo');
     const calcularPromedio = document.getElementById('calcular-btn'); 
 
+    /**
+     * The function `MostrarDatos` filters and displays vehicle data based on a selected filter option.
+     */
     const MostrarDatos = () => {
         tablaVehiculos.innerHTML = '';
         const filtradas = vehiculos.filter(v => {
@@ -46,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="col-velocidad-maxima">${vehiculo.velMax}</td>
                 <td class="col-altura-maxima">${vehiculo.altMax || 'N/A'}</td>
                 <td class="col-autonomia">${vehiculo.autonomia || 'N/A'}</td>
-                <td class="col-cantidad-puertas">${vehiculo.cantdPue || 'N/A'}</td>
+                <td class="col-cantidad-puertas">${vehiculo.cantPue || 'N/A'}</td>
                 <td class="col-cantidad-ruedas">${vehiculo.cantRue || 'N/A'}</td>
             `;
             row.addEventListener('dblclick', () => editarVehiculo(vehiculo));
@@ -57,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Evento para el cambio del filtro
     filtro.addEventListener('change', MostrarDatos);
 
+    
     calcularPromedio.addEventListener('click', () => {
         const filtradas = vehiculos.filter(v => {
             if (filtro.value === 'todos') return true;

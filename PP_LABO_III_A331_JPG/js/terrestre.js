@@ -25,12 +25,16 @@ export default class Terrestre extends Vehiculo {
     }
     
     setCantidadRuedas(cantidadRuedas) { 
-        if(cantidadRuedas > 0) {
+        if(cantidadRuedas >= 0) {
             this.cantRue = cantidadRuedas;
         }
     }
 
     toString() {
         return super.toString() + `, cantidad de puertas: ${this.cantPue}, cantidad de ruedas: ${this.cantRue}`;
+    }
+
+    toJson() {
+        return JSON.stringify(this);
     }
 }

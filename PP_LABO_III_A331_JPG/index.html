@@ -45,7 +45,7 @@
             <label for="col-autonomia">Autonomia</label>
 
             <input type="checkbox" id="col-cantidad-puertas" checked>
-            <label for="col-cantidad-puertas">Cantidad Puertas</label>
+            <label for="col-cantidad-puertas">Cantidad de Puertas</label>
             
             <input type="checkbox" id="col-cantidad-ruedas" checked>
             <label for="col-cantidad-ruedas">Cantidad de Ruedas</label>
@@ -62,13 +62,14 @@
                     <th class="col-autonomia">Autonomia</th>
                     <th class="col-cantidad-puertas">Cantidad de Puertas</th>
                     <th class="col-cantidad-ruedas">Cantidad de Ruedas</th>
+                    <th class="col-acciones">Acciones</th>
                 </tr>
             </thead>
             <tbody id="tabla-vehiculo">
 
             </tbody>
 
-            <button id="calcular-btn">Calcular Promedio</button>
+            <button class="calcular-btn" id="calcular-btn">Calcular Promedio</button>
             <p id="promedio-vehiculo"></p>
         </table>
 
@@ -106,9 +107,9 @@
 
             <label for="cantidad-ruedas">Cantidad de Ruedas:</label>
             <input type="number" id="cantidad-ruedas">
-
-            <button id="guardar-btn" type="submit">Guardar</button>
-            <button id="cancelar-btn" type="button">Cancelar</button>
+            
+            <button class="guardar-btn" id="guardar-btn" type="submit">Guardar</button>
+            <button class="cancelar-btn" type="button">Cancelar</button>
         </form>
         <button id="volver">Volver al Listado</button>
     </section>
